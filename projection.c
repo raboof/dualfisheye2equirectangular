@@ -27,6 +27,7 @@ typedef struct double3{
 
 enum CameraMode {
     FRONT,
+    DOUBLE,
     FRONT235,
     BACK,
     UP,
@@ -161,6 +162,9 @@ configuration parse_options(int argc, char **argv){
           else if (strcmp(optarg, "thetas") == 0)
           {
             po.mode = THETAS;
+          } else if (strcmp(optarg, "double") == 0)
+          {
+            po.mode = DOUBLE;
           }
           /* more else if clauses */
           else /* default: */
@@ -188,6 +192,7 @@ configuration parse_options(int argc, char **argv){
   if(verbose_flag){
     switch(po.mode){
       case FRONT:   printf("Camera: Front proj\n"); break;
+      case DOUBLE: printf("Camera: Double fisheye proj\n"); break;
       case FRONT235:   printf("Camera: Front 235 proj\n"); break;
       case DOWN:   printf("Camera: Down proj\n"); break;
       case SAMSUNG_GEAR_360: printf("Camera: samsung_gear_360\n"); break;
@@ -318,6 +323,24 @@ void gen_front_maps(configuration cfg,int** image_x,int** image_y ){
   }
 }
 
+void gen_double_maps(configuration cfg, int** image_x, int** image_y) {
+  int x,y;
+  // width of a 'single' fisheye in the input, uncropped
+  int single_width = cfg.width / 2;
+  int single_cols = cfg.cols / 2;
+
+  for (y = 0; y<cfg.rows;y++){
+    for (x = 0; x < cfg.cols; x++){
+      int xcrop = x < single_cols ? single_cols + cfg.crop : cfg.crop;
+      int single_x = x % single_cols;
+      double2 o = evaluatePixel_Front((double2){((double)single_x/((double)single_cols)) * ((single_width)-(2*cfg.crop)),
+                                                ((double)y/(double)cfg.rows)   * ((cfg.height)  -(2*cfg.crop))},
+                                      (double2){(single_width)-(2*cfg.crop), cfg.height-(2*cfg.crop)});
+      image_x[y][x] = (int)round(o.x)+xcrop;
+      image_y[y][x] = (int)round(o.y)+cfg.crop;
+    }
+  }
+}
 
 int
 main (int argc, char **argv)
@@ -339,6 +362,7 @@ main (int argc, char **argv)
 
     switch(cfg.mode){
       case FRONT:    gen_front_maps(cfg,image_x,image_y); break;
+      case DOUBLE: gen_double_maps(cfg, image_x, image_y); break;
 /*      case FRONT235:    gen_front235_maps(cfg,image_x,image_y); break;
       case DOWN:    gen_down_maps(cfg,image_x,image_y); break;
       case SAMSUNG_GEAR_360: gen_samsung_gear_360_maps(cfg,image_x,image_y); break;
