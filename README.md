@@ -47,3 +47,13 @@ Once you have created (or downloaded) the mapping files, use them with ffmpeg:
 For images, add exif metadata to help e.g. Facebook understand this is 360:
 
     exiftool -ProjectionType="equirectangular" out.jpg
+
+I haven't figured out how to add video metadata yet.
+
+## Quality
+
+The method used for mapping is a rather crude pixel-by-pixel conversion. You
+can clearly see the 'stitch' where the two images are joined together. You can
+probably achieve much better results with software that actually 'blends'
+together the images, like [hugin](http://hugin.sourceforge.net/), but that's
+also a bit more complicated ;).
