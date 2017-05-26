@@ -34,8 +34,8 @@ Compile the generator code:
 
 Create mapping files for video and photo's:
 
-    ./projection -x xmap_dokicam_video.pgm -y ymap_dokicam_video.pgm -h 1440 -w 2880 -r 1440 -c 2880 -b 35 -m double
-    ./projection -x xmap_dokicam.pgm -y ymap_dokicam.pgm -h 2048 -w 4096 -r 2048 -c 4096 -b 75 -m double
+    ./projection -x xmap_dokicam_video.pgm -y ymap_dokicam_video.pgm -h 1440 -w 2880 -r 1440 -c 2880 -b 35 -m samsung_gear_360
+    ./projection -x xmap_dokicam.pgm -y ymap_dokicam.pgm -h 2048 -w 4096 -r 2048 -c 4096 -b 75 -m samsung_gear_360
 
 ## Usage
 
