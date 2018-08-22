@@ -48,7 +48,8 @@ For images, add exif metadata to help e.g. Facebook understand this is 360:
 
     exiftool -ProjectionType="equirectangular" out.jpg
 
-I haven't figured out how to add video metadata yet.
+For videos, use Google's [Spatial Metadata Injector](https://github.com/google/spatial-media/releases) with the following options:
+![Image](google_spatial.png)
 
 ## Quality
 
