@@ -18,7 +18,7 @@ format, easily accessible via USB storage without even removing the card.
 ## Projection conversion
 
 Those images and video's show the 'double fish-eye' nature of the device.
-Services like Facebook, however require, require 306 imagery to be mapped
+Services like Facebook, however require, require 360 imagery to be mapped
 using the Equirectangular Projection. This can be achieved with `ffmpeg`
 using 2 'mapping files' for your image type.
 
